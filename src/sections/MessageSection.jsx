@@ -4,16 +4,16 @@ import gsap from "gsap";
 
 const MessageSection = () => {
 
-  useGSAP(()=>{
-    const firstMsgSplit = SplitText.create(".first-message",{
+  useGSAP(() => {
+    const firstMsgSplit = SplitText.create(".first-message", {
       type: "words"
     });
 
-    const secondMsgSplit = SplitText.create(".second-message",{
+    const secondMsgSplit = SplitText.create(".second-message", {
       type: "words"
     });
 
-    const paragraphSplit = SplitText.create(".message-content p",{
+    const paragraphSplit = SplitText.create(".message-content p", {
       type: "words, lines",
       linesClass: "paragraph-line"
     });
@@ -24,7 +24,7 @@ const MessageSection = () => {
       stagger: 1,
       scrollTrigger: {
         trigger: ".message-content",
-        start : "top center",
+        start: "top center",
         end: "30% center",
         scrub: true,
       }
@@ -36,7 +36,7 @@ const MessageSection = () => {
       stagger: 1,
       scrollTrigger: {
         trigger: ".second-message",
-        start : "top center",
+        start: "top center",
         end: "bottom center",
         scrub: true,
       }
@@ -47,29 +47,32 @@ const MessageSection = () => {
       scrollTrigger: {
         trigger: ".msg-text-scroll",
         start: "top 60%",
-        markers: true,
       }
     });
 
-    revealTl.to(".msg-text-scroll",{
+    revealTl.to(".msg-text-scroll", {
       duration: 1,
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       ease: "circ.inOut",
     })
+
+    const paragraphTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".message-content p",
+        start: "top center",
+      }
+    });
+  
+    paragraphTl.from(paragraphSplit.words, {
+      yPercent: 300,
+      rotate: 3,
+      ease: "power1.inOut",
+      duration: 1,
+      stagger: 0.01,
+    });
   });
 
-  const paragraphTl = gsap.timeline({
-    scrollTrigger:{
-      trigger: ".message-content p",
-      start: "top center",
-      markers: true,
-    }
-  });
 
-  paragraphTl.from(paragraphSplit.words,{
-    yPercent: 300,
-    
-})
 
   return (
     <section className="message-content">
@@ -79,7 +82,7 @@ const MessageSection = () => {
 
             <h1 className="first-message">Stir up your fearless past and</h1>
 
-            <div style={{clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)"}} className="msg-text-scroll">
+            <div style={{ clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)" }} className="msg-text-scroll">
               <div className="bg-light-brown md:pb-5 pb-3 px-5">
                 <h2 className="text-red-brown">Fuel up</h2>
               </div>
